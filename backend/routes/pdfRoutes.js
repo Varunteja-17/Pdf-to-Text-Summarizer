@@ -1,9 +1,7 @@
-import express from "express";
-import { summarizePDF } from "../controllers/pdfController.js";
-import { upload } from "../middleware/uploadMiddleware.js";
+import { Router } from 'express';
+import { summarizePdf } from '../controllers/pdfController.js';
+import { upload } from '../middleware/upload.js';
 
-const router = express.Router();
-
-router.post("/summarize", upload.single("file"), summarizePDF);
-
+const router = Router();
+router.post('/summarize', upload.single('file'), summarizePdf);
 export default router;

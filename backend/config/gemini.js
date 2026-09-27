@@ -1,12 +1,12 @@
-import dotenv from "dotenv";
-dotenv.config();
+import { GoogleGenAI } from '@google/genai';
 
-import { GoogleGenerativeAI } from "@google/generative-ai";
+export function getGeminiClient() {
+  if (!process.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY === 'your_api_key_here') {
+    const error = new Error('Gemini API key is not configured.');
+    error.code = 'GEMINI_CONFIGURATION';
+    throw error;
+  }
+  return new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+}
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-
-const model = genAI.getGenerativeModel({
-  model: "gemini-2.0-flash"
-});
-
-export default model;
+export const geminiModel = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
